@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="42">
+<head>
+    <meta charset="UTF-42">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" 4.2 поставить нельзя((>
+    <link rel="icon" href="https://novapbs.ru/lfado/favicon.png">
+    <title>42</title>
+</head>
+<style>
+    :root {
+        --42: #171717;
+        --5opka: #f8f2f2;
+        --5opka42: #171717cc;
+    }
+
+    body {
+        background-color: var(--42);
+        color: var(--5opka);
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        overflow: hidden;
+        text-align: center;
+    }
+
+        /* 42 БРАТУХА! */
+        .SorokDva {
+            transition: transform 0.4s ease;
+            z-index: 2;
+            position: relative;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: var(--5opka42);
+            box-shadow: 0 0 20px rgba(248, 242, 242, 0.2);
+        }
+
+        .SorokDva p {
+            font-size: clamp(3rem, 20vw, 15rem); 
+            margin: 0;
+            text-shadow: 0 0 10px rgba(248, 242, 242, 0.5);
+        }
+
+        .SorokDva:hover {
+            transform: rotate(4.2deg) scale(1.1) translateY(-4.2px);
+        }
+
+        .background-numbers {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .number-particle {
+            position: absolute;
+            color: rgba(248, 242, 242, 0.7);
+            font-size: 2rem;
+            opacity: 0;
+            user-select: none;
+            z-index: 1;
+        }
+
+        /* 42! Эй, братуха! 42! (42!)
+        42! Эй, братуха! 42! (Кемерово, брат!)
+        42! Эй, братуха! 42! (42!)
+        Отлетает голова под эти цифры и слова
+        42! Эй, братуха! 42! (42!)
+        (Эй, эй, эй)
+        42! Эй, братуха! 42! (42!)
+        (Эй, эй, эй)
+        42! Эй, братуха! 42! (Иди сюда!)
+        (Эй, эй, эй)
+        Знает вся моя братва, что такое 42!
+        (Эй, эй, эй)*/
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(calc(100vh + 100px)) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fallLeft {
+            0% {
+                transform: translate(-100px, -100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-200px, calc(100vh + 100px)) rotate(-360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fallRight {
+            0% {
+                transform: translate(100px, -100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(200px, calc(100vh + 100px)) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes swirl {
+            0% {
+                transform: translateY(-100px) rotate(0deg) scale(0.5);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(50vh) rotate(180deg) scale(1.2);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(calc(100vh + 100px)) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        .popka {
+            position: absolute;
+            bottom: 20px;
+            font-size: 1.2rem;
+            color: rgba(248, 242, 242, 0.6);
+            text-align: center;
+            width: 100%;
+            z-index: 2;
+        }
+
+        @media (max-width: 1024px) { /* планшеты */
+    body {
+        font-size: 8rem;
+    }
+
+    .SorokDva p {
+        font-size: 8rem;
+    }
+
+    .popka {
+        font-size: clamp(0.7rem, 3vw, 1.2rem);
+        padding: 0 5px;
+    }
+}
+
+    @media (max-width: 600px) {
+    body {
+        font-size: 4rem;
+        flex-direction: column;
+        text-align: center;
+        padding: 0 10px;
+    }
+
+    .SorokDva p {
+        font-size: 4rem;
+    }
+
+    .popka {
+        font-size: 0.9rem;
+        padding: 0 5px;
+    }
+}
+    </style>
+</head>
+<body>
+     <div class="SorokDva">
+         <p>42</p>
+     </div>
+     <div class="background-numbers" id="backgroundNumbers"></div>
+     <div class="popka">Хранит бог 42. Слава Пятерке!</div>
+
+   <script>
+        const sorokDva = document.querySelector('.SorokDva');
+        const backgroundNumbers = document.getElementById('backgroundNumbers');
+        let animationInterval;
+        let isActive = false;
+        
+        function createFallingNumbers() {
+            const number = document.createElement('div');
+            number.classList.add('number-particle');
+            number.textContent = '42';
+            const x = Math.random() * window.innerWidth;
+            
+            number.style.left = `${x}px`;
+            
+            const size = 1 + Math.random() * 3;
+            number.style.fontSize = `${size}rem`;
+            const duration = 2 + Math.random() * 3;
+            const animations = ['fall', 'fallLeft', 'fallRight', 'swirl'];
+            const randomAnimation = animations[Math.floor(Math.random() * animations.length)];            
+            number.style.animation = `${randomAnimation} ${duration}s linear forwards`;
+            backgroundNumbers.appendChild(number);
+            
+            setTimeout(() => {
+                if (number.parentNode) {
+                    number.parentNode.removeChild(number);
+                }
+            }, duration * 1000);
+        }
+        
+        function startAnimation() {
+            if (isActive) return;
+            isActive = true;
+            
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => createFallingNumbers(), i * 100);
+            }
+
+            animationInterval = setInterval(createFallingNumbers, 200);
+        }
+        
+        function stopAnimation() {
+            isActive = false;
+            clearInterval(animationInterval);
+        }
+        
+        sorokDva.addEventListener('mouseenter', startAnimation);
+        sorokDva.addEventListener('mouseleave', stopAnimation);
+        sorokDva.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            startAnimation();
+        });
+        
+        sorokDva.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            setTimeout(stopAnimation, 1000);
+        });
+        
+        sorokDva.addEventListener('touchcancel', stopAnimation);
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = new Date().getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+     </script>
+</body>
+</html>
